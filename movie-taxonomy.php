@@ -85,9 +85,12 @@ function my_filter_list() {
 
 add_filter( 'parse_query','perform_filtering' );
 function perform_filtering( $query ) {
-    $qv = &$query->query_vars;
-    if ( ( $qv['movie_reviews_movie_genre'] ) && is_numeric( $qv['movie_reviews_movie_genre'] ) ) {
-        $term = get_term_by( 'id', $qv['movie_reviews_movie_genre'], 'movie_reviews_movie_genre' );
-        $qv['movie_reviews_movie_genre'] = $term->slug;
+	
+	if( get_post_type()  == 'movie_reviews' ) {
+		$qv = &$query->query_vars;
+		if ( ( $qv['movie_reviews_movie_genre'] ) && is_numeric( $qv['movie_reviews_movie_genre'] ) ) {
+			$term = get_term_by( 'id', $qv['movie_reviews_movie_genre'], 'movie_reviews_movie_genre' );
+			$qv['movie_reviews_movie_genre'] = $term->slug;
+		}
     }
 }
